@@ -1,8 +1,9 @@
 ﻿using battlenet_api.Utilities;
+using System;
 
 namespace battlenet_api
 {
-    public abstract class BattleNetApiClient
+    public abstract class BattleNetApiClient : IDisposable
     {
         private Region region;
 
@@ -50,6 +51,14 @@ namespace battlenet_api
                 case Region.CN:
                     baseURL = "https://www.battlenet.com.cn";
                     break;
+            }
+        }
+
+        public void Dispose()
+        {
+            if (webClient != null)
+            {
+                webClient.Dispose();
             }
         }
     }

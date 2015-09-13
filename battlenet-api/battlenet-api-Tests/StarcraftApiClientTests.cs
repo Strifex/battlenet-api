@@ -8,12 +8,18 @@ namespace battlenet_api_Tests
     [TestClass]
     public class StarcraftApiClientTests
     {
-        string apiKey = "8y9jdy72d85dq7bvgdqwb28w3ysuxew4";
+        private string apiKey = "8y9jdy72d85dq7bvgdqwb28w3ysuxew4";
+        private StarcraftApiClient client;
+
+        [TestInitialize]
+        public void Initialize()
+        {
+            client = new StarcraftApiClient(apiKey, Region.US, Locale.en_US);
+        }
 
         [TestMethod]
         public async Task RetrieveAchievementListAsyncTest()
         {
-            StarcraftApiClient client = new StarcraftApiClient(apiKey, Region.US, Locale.en_US);
             AchievementList achievements = await client.RetrieveAchievementListAsync();
 
             Assert.IsNotNull(achievements);
@@ -22,10 +28,15 @@ namespace battlenet_api_Tests
         [TestMethod]
         public async Task RetrieveRewardsAsyncTest()
         {
-            StarcraftApiClient client = new StarcraftApiClient(apiKey, Region.US, Locale.en_US);
             Rewards rewards = await client.RetrieveRewardsAsync();
 
             Assert.IsNotNull(rewards);
+        }
+
+        [TestCleanup]
+        public void Cleanup()
+        {
+            client.Dispose();
         }
     }
 }

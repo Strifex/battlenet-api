@@ -11,12 +11,18 @@ namespace battlenet_api_Tests
     [TestClass]
     public class WarcraftApiClientTests
     {
-        string apiKey = "8y9jdy72d85dq7bvgdqwb28w3ysuxew4";
+        private string apiKey = "8y9jdy72d85dq7bvgdqwb28w3ysuxew4";
+        private WarcraftApiClient client;
+
+        [TestInitialize]
+        public void Initialize()
+        {
+            client = new WarcraftApiClient(apiKey, Region.US, Locale.en_US);
+        }
 
         [TestMethod]
         public async Task RetrieveAchievementAsyncTest()
         {
-            WarcraftApiClient client = new WarcraftApiClient(apiKey, Region.US, Locale.en_US);
             Achievement achievement = await client.RetrieveAchievementAsync("2144");
 
             Assert.IsNotNull(achievement);
@@ -26,7 +32,6 @@ namespace battlenet_api_Tests
         [TestMethod]
         public async Task RetrieveAuctionDataStatusAsync()
         {
-            WarcraftApiClient client = new WarcraftApiClient(apiKey, Region.US, Locale.en_US);
             AuctionDataStatus auctionDataStatus = await client.RetrieveAuctionDataStatus("Stormrage");
 
             Assert.IsNotNull(auctionDataStatus);
@@ -35,11 +40,16 @@ namespace battlenet_api_Tests
         [TestMethod]
         public async Task RetrieveBattlePetAbility()
         {
-            WarcraftApiClient client = new WarcraftApiClient(apiKey, Region.US, Locale.en_US);
             BattlePetAbility petAbility = await client.RetrieveBattlePetAbility("640");
 
             Assert.IsNotNull(petAbility);
             Assert.AreEqual(640, petAbility.id);
+        }
+
+        [TestCleanup]
+        public void Cleanup()
+        {
+            client.Dispose();
         }
     }
 }
