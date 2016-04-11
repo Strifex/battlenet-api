@@ -1,4 +1,5 @@
 ﻿using battlenet_api.Models.Warcraft;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace battlenet_api
@@ -22,7 +23,7 @@ namespace battlenet_api
         #endregion
 
         #region AUCTION API
-        public async Task<AuctionDataStatus> RetrieveAuctionDataStatus(string realm)
+        public async Task<AuctionDataStatus> RetrieveAuctionDataStatusAsync(string realm)
         {
             string url = baseURL + "/wow/auction/data/" + realm + "?locale=" + Locale + "&apiKey=" + ApiKey;
 
@@ -32,10 +33,34 @@ namespace battlenet_api
         }
         #endregion
 
-        #region BATTLEPET API
-        public async Task<BattlePetAbility> RetrieveBattlePetAbility(string id)
+        #region BOSS API
+        public async Task<List<Boss>> RetrieveAllBossesAsync()
         {
-            string url = baseURL + "/wow/battlePet/ability/" + id + "?locale=" + Locale + "&apiKey=" + ApiKey;
+            string url = baseURL + "/wow/boss/?locale=" + Locale + "&apiKey=" + ApiKey;
+
+            BossMasterList masterList = await webClient.GetDataAsync<BossMasterList>(url);
+
+            return masterList.bosses;
+        }
+
+        public async Task<Boss> RetrieveBossAsync(int id)
+        {
+            string url = baseURL + "/wow/boss/" + id + "?locale=" + Locale + "&apiKey=" + ApiKey;
+
+            Boss boss = await webClient.GetDataAsync<Boss>(url);
+
+            return boss;
+        }
+        #endregion
+
+        #region CHALLENGE MODE API
+
+        #endregion
+
+        #region PET API
+        public async Task<BattlePetAbility> RetrievePetAbilityAsync(string id)
+        {
+            string url = baseURL + "/wow/pet/ability/" + id + "?locale=" + Locale + "&apiKey=" + ApiKey;
 
             BattlePetAbility petAbility = await webClient.GetDataAsync<BattlePetAbility>(url);
 

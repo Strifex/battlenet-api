@@ -2,6 +2,7 @@
 using battlenet_api.Models.Warcraft;
 using battlenet_api;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace battlenet_api_Tests
 {
@@ -12,35 +13,53 @@ namespace battlenet_api_Tests
     public class WarcraftApiClientTests
     {
         private string apiKey = "8y9jdy72d85dq7bvgdqwb28w3ysuxew4";
-        private WarcraftApiClient client;
+        private WarcraftApiClient _client;
 
         [TestInitialize]
         public void Initialize()
         {
-            client = new WarcraftApiClient(apiKey, Region.US, Locale.en_US);
+            _client = new WarcraftApiClient(apiKey, Region.US, Locale.en_US);
         }
 
         [TestMethod]
         public async Task RetrieveAchievementAsyncTest()
         {
-            Achievement achievement = await client.RetrieveAchievementAsync("2144");
+            Achievement achievement = await _client.RetrieveAchievementAsync("2144");
 
             Assert.IsNotNull(achievement);
             Assert.AreEqual(2144, achievement.id);
         }
 
         [TestMethod]
-        public async Task RetrieveAuctionDataStatusAsync()
+        public async Task RetrieveAuctionDataStatusAsyncTest()
         {
-            AuctionDataStatus auctionDataStatus = await client.RetrieveAuctionDataStatus("Stormrage");
+            AuctionDataStatus auctionDataStatus = await _client.RetrieveAuctionDataStatusAsync("Stormrage");
 
             Assert.IsNotNull(auctionDataStatus);
         }
 
         [TestMethod]
-        public async Task RetrieveBattlePetAbility()
+        public async Task RetrieveAllBossesAsyncTest()
         {
-            BattlePetAbility petAbility = await client.RetrieveBattlePetAbility("640");
+            List<Boss> bosses = await _client.RetrieveAllBossesAsync();
+
+            Assert.IsNotNull(bosses);
+            Assert.IsTrue(bosses.Count > 0);
+        }
+
+        [TestMethod]
+        public async Task RetrieveBossAsyncTest()
+        {
+            Boss boss = await _client.RetrieveBossAsync(24723);
+
+            Assert.IsNotNull(boss);
+            Assert.AreEqual(24723, boss.id);
+        }
+
+        [TestMethod]
+        public async Task RetrievePetAbilityTest()
+        {
+            BattlePetAbility petAbility = await _client.RetrievePetAbilityAsync("640");
 
             Assert.IsNotNull(petAbility);
             Assert.AreEqual(640, petAbility.id);
@@ -49,7 +68,7 @@ namespace battlenet_api_Tests
         [TestCleanup]
         public void Cleanup()
         {
-            client.Dispose();
+            _client.Dispose();
         }
     }
 }

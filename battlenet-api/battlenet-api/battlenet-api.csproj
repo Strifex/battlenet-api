@@ -54,8 +54,12 @@
     <Compile Include="Models\Warcraft\Achievement.cs" />
     <Compile Include="Models\Warcraft\AuctionDataStatus.cs" />
     <Compile Include="Models\Warcraft\BattlePetAbility.cs" />
+    <Compile Include="Models\Warcraft\Boss.cs" />
+    <Compile Include="Models\Warcraft\BossMasterList.cs" />
     <Compile Include="Models\Warcraft\Criterion.cs" />
     <Compile Include="Models\Warcraft\File.cs" />
+    <Compile Include="Models\Warcraft\Location.cs" />
+    <Compile Include="Models\Warcraft\Npc.cs" />
     <Compile Include="Models\Warcraft\RewardItem.cs" />
     <Compile Include="Models\Warcraft\TooltipParams.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

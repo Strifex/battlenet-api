@@ -30,7 +30,12 @@ namespace battlenet_api.Utilities
         {
             string json = await GetRequestAsync(url);
 
-            return DeserializeJson<T>(json);
+            if (!string.IsNullOrEmpty(json))
+            {
+                return DeserializeJson<T>(json);
+            }
+
+            return default(T);
         }
 
         private T DeserializeJson<T>(string json)
@@ -51,9 +56,14 @@ namespace battlenet_api.Utilities
             {
                 using (HttpResponseMessage response = await httpClient.GetAsync(url))
                 {
-                    string json = await response.Content.ReadAsStringAsync();
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string json = await response.Content.ReadAsStringAsync();
 
-                    return json;
+                        return json;
+                    }
+
+                    return null;
                 }
             }
             catch
@@ -62,17 +72,34 @@ namespace battlenet_api.Utilities
             }
         }
 
-        public void Dispose()
-        {
-            if (httpClient != null)
-            {
-                httpClient.Dispose();
-            }
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
 
-            if (httpHandler != null)
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
             {
-                httpClient.Dispose();
+                if (disposing)
+                {
+                    if (httpClient != null)
+                    {
+                        httpClient.Dispose();
+                    }
+
+                    if (httpHandler != null)
+                    {
+                        httpHandler.Dispose();
+                    }
+                }
+
+                disposedValue = true;
             }
         }
+
+        public void Dispose()
+        {
+            Dispose(true);
+        }
+        #endregion
     }
 }
