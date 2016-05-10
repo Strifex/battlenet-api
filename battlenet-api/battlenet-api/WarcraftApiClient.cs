@@ -1,5 +1,7 @@
 ﻿using battlenet_api.Models.Warcraft;
 using System.Collections.Generic;
+using System.Net;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace battlenet_api
@@ -53,7 +55,31 @@ namespace battlenet_api
         }
         #endregion
 
-        #region CHALLENGE MODE API
+        #region CHARACTER PROFILE
+        public async Task<Character> RetrieveCharacterInformation(string realm, string characterName, List<CharacterFields> fields)
+        {
+            StringBuilder url = new StringBuilder();
+
+            url.Append(baseURL).Append("/wow/character/").Append(realm).Append("/").Append(characterName).Append("?fields=");
+
+            for (int x = 0; x < fields.Count; x++)
+            {
+                if (x != fields.Count - 1)
+                {
+                    url.Append(fields[x].ToString().ToLower()).Append(WebUtility.UrlEncode(","));
+                }
+                else
+                {
+                    url.Append(fields[x].ToString().ToLower());
+                }
+            }
+
+            url.Append("&locale=").Append(Locale).Append("&apiKey=").Append(ApiKey);
+
+            Character character = await webClient.GetDataAsync<Character>(url.ToString());
+
+            return character;
+        }
 
         #endregion
 

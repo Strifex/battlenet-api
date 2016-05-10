@@ -57,6 +57,21 @@ namespace battlenet_api_Tests
         }
 
         [TestMethod]
+        public async Task RetrieveCharacterAsyncTest()
+        {
+            List<CharacterFields> fields = new List<CharacterFields>();
+            fields.Add(CharacterFields.Achievements);
+            fields.Add(CharacterFields.Appearance);
+            fields.Add(CharacterFields.Feed);
+            fields.Add(CharacterFields.Guild);
+            fields.Add(CharacterFields.HunterPets);
+
+            Character character = await _client.RetrieveCharacterInformation("Stormrage", "Turack", fields);
+
+            Assert.IsNotNull(character);
+        }
+
+        [TestMethod]
         public async Task RetrievePetAbilityTest()
         {
             BattlePetAbility petAbility = await _client.RetrievePetAbilityAsync("640");
