@@ -41,6 +41,7 @@ namespace battlenet_api.Models.Warcraft
         public CharacterAchievements achievements { get; set; }
         public List<Feed> feed { get; set; }
         public Appearance appearance { get; set; }
+        public Items items { get; set; }
         public int totalHonorableKills { get; set; }
     }
 }

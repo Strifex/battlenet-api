@@ -65,6 +65,7 @@ namespace battlenet_api_Tests
             fields.Add(CharacterFields.Feed);
             fields.Add(CharacterFields.Guild);
             fields.Add(CharacterFields.HunterPets);
+            fields.Add(CharacterFields.Items);
 
             Character character = await _client.RetrieveCharacterInformation("Stormrage", "Turack", fields);
 
