@@ -18,5 +18,13 @@ namespace battlenet_api.Models.Warcraft
         public int journalId { get; set; }
         public List<Npc> npcs { get; set; }
         public Location location { get; set; }
+        public int normalKills { get; set; }
+        public long? normalTimestamp { get; set; }
+        public int? heroicKills { get; set; }
+        public long? heroicTimestamp { get; set; }
+        public int? lfrKills { get; set; }
+        public long? lfrTimestamp { get; set; }
+        public int? mythicKills { get; set; }
+        public long? mythicTimestamp { get; set; }
     }
 }

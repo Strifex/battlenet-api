@@ -6,9 +6,6 @@ using System.Collections.Generic;
 
 namespace battlenet_api_Tests
 {
-    /// <summary>
-    /// Summary description for WowApiClientTests
-    /// </summary>
     [TestClass]
     public class WarcraftApiClientTests
     {
@@ -59,13 +56,26 @@ namespace battlenet_api_Tests
         [TestMethod]
         public async Task RetrieveCharacterAsyncTest()
         {
-            List<CharacterFields> fields = new List<CharacterFields>();
-            fields.Add(CharacterFields.Achievements);
-            fields.Add(CharacterFields.Appearance);
-            fields.Add(CharacterFields.Feed);
-            fields.Add(CharacterFields.Guild);
-            fields.Add(CharacterFields.HunterPets);
-            fields.Add(CharacterFields.Items);
+            List<CharacterField> fields = new List<CharacterField>();
+            fields.Add(CharacterField.Achievements);
+            fields.Add(CharacterField.Appearance);
+            fields.Add(CharacterField.Feed);
+            fields.Add(CharacterField.Guild);
+            fields.Add(CharacterField.HunterPets);
+            fields.Add(CharacterField.Items);
+            fields.Add(CharacterField.Mounts);
+            fields.Add(CharacterField.Pets);
+            fields.Add(CharacterField.PetSlots);
+            fields.Add(CharacterField.Professions);
+            fields.Add(CharacterField.Progression);
+            fields.Add(CharacterField.PvP);
+            fields.Add(CharacterField.Quests);
+            fields.Add(CharacterField.Reputation);
+            fields.Add(CharacterField.Statistics);
+            fields.Add(CharacterField.Stats);
+            fields.Add(CharacterField.Talents);
+            fields.Add(CharacterField.Titles);
+            //fields.Add(CharacterField.Audit);
 
             Character character = await _client.RetrieveCharacterInformation("Stormrage", "Turack", fields);
 

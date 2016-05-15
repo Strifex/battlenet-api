@@ -56,7 +56,7 @@ namespace battlenet_api
         #endregion
 
         #region CHARACTER PROFILE
-        public async Task<Character> RetrieveCharacterInformation(string realm, string characterName, List<CharacterFields> fields)
+        public async Task<Character> RetrieveCharacterInformation(string realm, string characterName, List<CharacterField> fields)
         {
             StringBuilder url = new StringBuilder();
 
@@ -64,13 +64,15 @@ namespace battlenet_api
 
             for (int x = 0; x < fields.Count; x++)
             {
+                string field = fields[x].ToQueryString();
+
                 if (x != fields.Count - 1)
                 {
-                    url.Append(fields[x].ToString().ToLower()).Append(WebUtility.UrlEncode(","));
+                    url.Append(field).Append(WebUtility.UrlEncode(","));
                 }
                 else
                 {
-                    url.Append(fields[x].ToString().ToLower());
+                    url.Append(field);
                 }
             }
 
